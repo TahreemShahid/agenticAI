@@ -1,16 +1,14 @@
-# PDF Intelligence – AI-Powered Document Analysis
+# PDF Intelligence - AI-Powered Document Q&A
 
-A modern React frontend for AI-driven document understanding using LangChain and advanced AI. Upload any PDF document to get instant summaries, perform intelligent comparisons, or ask natural language questions—with all features supported by robust backend AI services.
+A modern React frontend for PDF question-answering using LangChain and advanced AI. Upload any PDF document and ask intelligent questions to get instant answers with supporting evidence.
 
 ## Features
 
-- 🎯 **Drag & Drop PDF Upload** – Simple and intuitive file upload with visual feedback.
-- 📝 **AI-Powered Summarization** – Instantly generate concise or detailed summaries of your PDFs.
-- ⚖️ **Document Comparison** – Compare multiple documents or sections side-by-side for differences and similarities.
-- 🤖 **Q&A Over Documents** – Ask natural language questions about your document content.
-- 📚 **Source Citations** – Get supporting excerpts, references, or evidence with every result.
-- 🎨 **Modern UI** – Responsive, clean design with real-time feedback.
-- ⚡ **Fast Processing** – Immediate responses and analysis powered by scalable AI.
+- 🎯 **Drag & Drop PDF Upload** - Easy file upload with visual feedback
+- 🤖 **AI-Powered Q&A** - Ask natural language questions about your documents
+- 📚 **Source Citations** - Get supporting excerpts with every answer
+- 🎨 **Modern UI** - Beautiful, responsive design with loading states
+- ⚡ **Real-time Processing** - Fast document analysis and retrieval
 
 ## Quick Start
 
@@ -73,6 +71,7 @@ frontend/
 │       └── Index.tsx           # Main application page
 
 backend/
+├── app.py                      # Your original Streamlit app
 ├── api_server.py              # New FastAPI server (to create)
 ├── custom_langchain.py        # Your custom LLM wrapper
 └── keys.txt                   # API configuration

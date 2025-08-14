@@ -1,0 +1,6 @@
+{
+  "AI_Agent_URL": "https://ddc4-ai.intelligize.net/api/IntelligizeAI",
+  "API_KEY": "aws_bedrock_claude_3_haiku",
+  "AI_Agent_Stream_URL": "https://ddc4-ai.intelligize.net/api/IntelligizeAI/GetStreamResponse"
+
+}

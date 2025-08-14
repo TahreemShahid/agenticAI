@@ -1,11 +1,10 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Upload, FileText, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { PDFQAService } from '@/services/api';
 
 interface PDFUploaderProps {
-  onFileSelect: (file: File | null) => void;
+  onFileSelect: (file: File) => void;
   selectedFile?: File | null;
   isLoading?: boolean;
 }
@@ -16,7 +15,6 @@ export const PDFUploader: React.FC<PDFUploaderProps> = ({
   isLoading = false
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -31,13 +29,13 @@ export const PDFUploader: React.FC<PDFUploaderProps> = ({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
+
     const files = Array.from(e.dataTransfer.files);
     const pdfFile = files.find(file => file.type === 'application/pdf');
+    
     if (pdfFile) {
       onFileSelect(pdfFile);
     }
-    // Reset so same file can be uploaded again
-    if (fileInputRef.current) fileInputRef.current.value = '';
   }, [onFileSelect]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,31 +43,11 @@ export const PDFUploader: React.FC<PDFUploaderProps> = ({
     if (file && file.type === 'application/pdf') {
       onFileSelect(file);
     }
-    // Always reset input so same file can be uploaded again
-    if (e.target) e.target.value = '';
   }, [onFileSelect]);
 
-  const removeFile = useCallback(async () => {
-    if (selectedFile && !isLoading) {
-      try {
-        const result = await PDFQAService.deleteFile(selectedFile.name);
-        if (result.success) {
-          onFileSelect(null);
-          if (fileInputRef.current) fileInputRef.current.value = '';
-        } else {
-          console.error('Delete failed:', result.message);
-        }
-      } catch (e) {
-        console.error('Failed to delete file:', e);
-      }
-    }
-  }, [selectedFile, isLoading, onFileSelect]);
-
-  useEffect(() => {
-    if (!selectedFile && fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  }, [selectedFile]);
+  const removeFile = () => {
+    onFileSelect(null as any);
+  };
 
   if (selectedFile) {
     return (
@@ -95,31 +73,6 @@ export const PDFUploader: React.FC<PDFUploaderProps> = ({
             </Button>
           )}
         </div>
-        {isLoading && (
-          <p className="text-blue-600 mt-2 font-medium flex items-center gap-2">
-            <svg
-              className="animate-spin h-5 w-5 text-blue-600"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
-            </svg>
-            Processing PDF, please wait...
-          </p>
-        )}
       </div>
     );
   }
@@ -141,20 +94,21 @@ export const PDFUploader: React.FC<PDFUploaderProps> = ({
       <p className="text-muted-foreground mb-4">
         or click to browse your files
       </p>
+      
       <input
-        ref={fileInputRef}
         type="file"
         accept=".pdf"
         onChange={handleFileInput}
         className="hidden"
         id="pdf-upload"
-        disabled={isLoading}
       />
-      <Button asChild variant="gradient" disabled={isLoading}>
-        <label htmlFor="pdf-upload" className={isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}>
-          {isLoading ? 'Uploading...' : 'Choose PDF File'}
+      
+      <Button asChild variant="gradient">
+        <label htmlFor="pdf-upload" className="cursor-pointer">
+          Choose PDF File
         </label>
       </Button>
+      
       <p className="text-xs text-muted-foreground mt-3">
         Supports PDF files up to 50MB
       </p>

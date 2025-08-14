@@ -30,21 +30,20 @@ def call_ai_agent(ai_agent_url: str, prompt: str, secret_key: str) -> str:
         return f"ERROR in AI call: {e}"
 
 def build_prompt(text: str, summary_type: str = "brief", audience: Optional[str] = None) -> str:
-    base_instruction = "Provide ONLY the summary text below. Do NOT include any explanations, headings, or extra lines.\n\n"
-
+    """Build the summarization prompt based on type and audience"""
     if summary_type == "detailed":
-        return base_instruction + f"Summarize the following text in a detailed, clear paragraph of 150–200 words:\n\n{text}"
+        return f"Summarize the following text in a detailed, clear paragraph of 150–200 words:\n\n{text}"
     elif summary_type == "bullet_points":
-        return base_instruction + f"Summarize the following text into exactly 10 bullet points. Cover all major ideas and facts:\n\n{text}"
+        return f"Summarize the following text into exactly 10 bullet points. Cover all major ideas and facts:\n\n{text}"
     elif summary_type == "micro":
-        return base_instruction + f"Summarize this text in under 75 words. Focus only on the essentials:\n\n{text}"
+        return f"Summarize this text in under 75 words. Focus only on the essentials:\n\n{text}"
     elif summary_type == "audience" and audience == "general":
-        return base_instruction + f"Summarize this disclosure for a general audience such as investors or journalists. Use plain English, focus on functions and practices:\n\n{text}"
+        return f"Summarize this disclosure for a general audience such as investors or journalists. Use plain English, focus on functions and practices:\n\n{text}"
     elif summary_type == "audience" and audience == "professional":
-        return base_instruction + f"Summarize this disclosure for a finance professional. Use appropriate financial terminology:\n\n{text}"
+        return f"Summarize this disclosure for a finance professional. Use appropriate financial terminology:\n\n{text}"
     else:
-        return base_instruction + f"Summarize the following text in a concise paragraph:\n\n{text}"
-
+        # Default to a brief summary
+        return f"Summarize the following text in a concise paragraph:\n\n{text}"
 
 def summarize(text: str, ai_agent_url: str, secret_key: str, summary_type: str = "brief", audience: Optional[str] = None) -> str:
     """Summarize text using AI agent"""

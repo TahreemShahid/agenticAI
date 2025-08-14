@@ -31,7 +31,7 @@ def build_comparison_prompt(text1: str, text2: str, comparison_type: str = "comp
     2. Provide structured comparison results
     3. Include specific examples and evidence
     4. Be objective and thorough
-    5. Format your response as clear, readable text and do not add any lines , just give the analysis.
+    5. Format your response as clear, readable text
     
     TEXT 1:
     {text1}
@@ -139,17 +139,17 @@ def generate_mock_comparison(text1: str, text2: str, comparison_type: str) -> st
     if comparison_type == "similarities":
         return f"""SIMILARITIES ANALYSIS:
 
- **Text Structure & Format**
+📝 **Text Structure & Format**
 - Both texts contain {min(word_count1, word_count2)} or more words
 - Both follow similar paragraph structures
 - Common themes and topics may be present
 
- **Linguistic Patterns**
+🔤 **Linguistic Patterns**
 - Similar sentence structures observed
 - Common vocabulary and terminology usage
 - Comparable tone and writing style
 
- **Content Overlap**
+📊 **Content Overlap**
 - Shared concepts and ideas identified
 - Similar approaches to topic presentation
 - Overlapping subject matter areas
@@ -159,22 +159,22 @@ Note: This is a mock analysis. Connect your AI service for detailed comparison."
     elif comparison_type == "differences":
         return f"""DIFFERENCES ANALYSIS:
 
- **Text Length & Structure**
+📏 **Text Length & Structure**
 - Text A: {word_count1} words, {char_count1} characters, ~{sentences1} sentences
 - Text B: {word_count2} words, {char_count2} characters, ~{sentences2} sentences
 - Length difference: {abs(word_count1 - word_count2)} words
 
- **Style & Tone Variations**
+🎨 **Style & Tone Variations**
 - Different writing approaches detected
 - Varying levels of formality
 - Distinct presentation methods
 
- **Content Distinctions**
+📋 **Content Distinctions**
 - Unique topics and themes in each text
 - Different perspectives on similar subjects
 - Varying depth and detail levels
 
- **Specific Differences**
+🔍 **Specific Differences**
 - Text A focuses on different aspects
 - Text B emphasizes alternative viewpoints
 - Contrasting conclusions or recommendations
@@ -184,40 +184,40 @@ Note: This is a mock analysis. Connect your AI service for detailed comparison."
     else:  # comprehensive
         return f"""COMPREHENSIVE TEXT COMPARISON ANALYSIS:
 
-##  OVERVIEW
+## 📊 OVERVIEW
 - Text A: {word_count1} words, {char_count1} characters, ~{sentences1} sentences
 - Text B: {word_count2} words, {char_count2} characters, ~{sentences2} sentences
 - Analysis Type: Comprehensive Comparison
 
-##  SIMILARITIES
-**Structural Elements**
+## 🤝 SIMILARITIES
+✅ **Structural Elements**
 - Both texts maintain organized paragraph structure
 - Similar approaches to topic introduction
 - Comparable use of examples and evidence
 
- **Content Themes**
+✅ **Content Themes**
 - Shared subject matter areas
 - Common terminology and concepts
 - Similar target audience considerations
 
-##  DIFFERENCES  
- **Length & Scope**
+## 🔄 DIFFERENCES  
+❌ **Length & Scope**
 - Significant difference in word count ({abs(word_count1 - word_count2)} words)
 - Varying levels of detail and elaboration
 - Different coverage breadth
 
- **Style & Approach**
+❌ **Style & Approach**
 - Distinct writing styles and tones
 - Different organizational patterns
 - Varying use of supporting evidence
 
-##  KEY INSIGHTS
+## 🎯 KEY INSIGHTS
 - The texts share fundamental themes but differ in execution
 - Each text brings unique perspectives to common topics  
 - Style and presentation methods vary significantly
 - Both texts serve their intended purposes effectively
 
-##  RECOMMENDATIONS
+## 📝 RECOMMENDATIONS
 - Consider combining strengths from both texts
 - Text A's approach works well for [specific context]
 - Text B's style is more suitable for [different context]
