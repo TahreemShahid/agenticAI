@@ -1,11 +1,11 @@
 import requests
-import json
 import logging
 from typing import Optional
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
 
 def call_ai_agent(ai_agent_url: str, prompt: str, secret_key: str) -> str:
     """Call the AI agent for summarization"""
@@ -17,19 +17,22 @@ def call_ai_agent(ai_agent_url: str, prompt: str, secret_key: str) -> str:
         "Source": "Backend - Dev - PBD",
         "Category": "Summarization",
         "AppKey": "PBD",
-        "LLMMetadata": True
+        "LLMMetadata": True,
     }
     try:
         logger.info(f"Calling AI agent for summarization at: {ai_agent_url}")
         response = requests.post(ai_agent_url, json=payload, timeout=30)
         response.raise_for_status()
         result = response.json()
-        return result['content'][0]['text']
+        return result["content"][0]["text"]
     except Exception as e:
         logger.error(f"Error in AI summarization call: {e}")
         return f"ERROR in AI call: {e}"
 
-def build_prompt(text: str, summary_type: str = "brief", audience: Optional[str] = None) -> str:
+
+def build_prompt(
+    text: str, summary_type: str = "brief", audience: Optional[str] = None
+) -> str:
     """Build the summarization prompt based on type and audience"""
     if summary_type == "detailed":
         return f"Summarize the following text in a detailed, clear paragraph of 150–200 words:\n\n{text}"
@@ -45,21 +48,33 @@ def build_prompt(text: str, summary_type: str = "brief", audience: Optional[str]
         # Default to a brief summary
         return f"Summarize the following text in a concise paragraph:\n\n{text}"
 
-def summarize(text: str, ai_agent_url: str, secret_key: str, summary_type: str = "brief", audience: Optional[str] = None) -> str:
+
+def summarize(
+    text: str,
+    ai_agent_url: str,
+    secret_key: str,
+    summary_type: str = "brief",
+    audience: Optional[str] = None,
+) -> str:
     """Summarize text using AI agent"""
     if not text.strip():
         return "Error: No text provided for summarization."
-    
-    logger.info(f"Starting summarization with type: {summary_type}, audience: {audience}")
-    
+
+    logger.info(
+        f"Starting summarization with type: {summary_type}, audience: {audience}"
+    )
+
     prompt = build_prompt(text, summary_type=summary_type, audience=audience)
     return call_ai_agent(ai_agent_url, prompt, secret_key)
 
-def generate_mock_summary(text: str, summary_type: str = "brief", audience: Optional[str] = None) -> str:
+
+def generate_mock_summary(
+    text: str, summary_type: str = "brief", audience: Optional[str] = None
+) -> str:
     """Generate a mock summary for testing purposes"""
     word_count = len(text.split())
     char_count = len(text)
-    
+
     if summary_type == "detailed":
         return f"""DETAILED SUMMARY (Mock Response):
 
@@ -74,7 +89,7 @@ Key aspects that would be highlighted in a detailed analysis include:
 This mock summary demonstrates the detailed analysis format that would be provided by the AI service when properly configured.
 
 Note: This is a mock response. Connect your AI service for detailed summarization."""
-    
+
     elif summary_type == "bullet_points":
         return f"""BULLET POINT SUMMARY (Mock Response):
 
@@ -90,14 +105,14 @@ Note: This is a mock response. Connect your AI service for detailed summarizatio
 • Summary format demonstrates bullet point structure
 
 Note: This is a mock response. Connect your AI service for detailed bullet point summarization."""
-    
+
     elif summary_type == "micro":
         return f"""MICRO SUMMARY (Mock Response):
 
 This {word_count}-word text covers key topics and themes. Main points include essential information and conclusions. Content is structured for clarity and comprehension.
 
 Note: This is a mock response. Connect your AI service for micro summarization."""
-    
+
     elif summary_type == "audience":
         audience_text = "general" if audience == "general" else "professional"
         return f"""AUDIENCE-SPECIFIC SUMMARY (Mock Response):
@@ -105,10 +120,10 @@ Note: This is a mock response. Connect your AI service for micro summarization."
 This {word_count}-word text has been analyzed for a {audience_text} audience. The content includes relevant information and terminology appropriate for this target demographic. Key points are presented in an accessible format suitable for {audience_text} readers.
 
 Note: This is a mock response. Connect your AI service for audience-specific summarization."""
-    
+
     else:  # brief
         return f"""BRIEF SUMMARY (Mock Response):
 
 This text contains {word_count} words and covers various topics and themes. The content is well-structured and includes key information that would be highlighted in a proper AI-generated summary. Main points and conclusions are presented clearly.
 
-Note: This is a mock response. Connect your AI service for brief summarization.""" 
+Note: This is a mock response. Connect your AI service for brief summarization."""

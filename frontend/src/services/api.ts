@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000'; // Adjust as needed
+const API_BASE_URL = "http://localhost:8000"; // Adjust as needed
 
 export interface PDFUploadResponse {
   success: boolean;
@@ -36,10 +36,10 @@ export interface SummarizationResponse {
 export class PDFQAService {
   static async uploadPDF(file: File): Promise<PDFUploadResponse> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("files", file);
 
     const response = await fetch(`${API_BASE_URL}/upload`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
     });
 
@@ -50,10 +50,13 @@ export class PDFQAService {
     return response.json();
   }
 
-  static async askQuestion(question: string, filename: string): Promise<QuestionResponse> {
+  static async askQuestion(
+    question: string,
+    filename: string
+  ): Promise<QuestionResponse> {
     const response = await fetch(`${API_BASE_URL}/ask`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question, filename }),
     });
 
@@ -67,11 +70,11 @@ export class PDFQAService {
   static async compareTexts(
     text1: string,
     text2: string,
-    comparison_type: string = 'comprehensive'
+    comparison_type: string = "comprehensive"
   ): Promise<ComparisonResponse> {
     const response = await fetch(`${API_BASE_URL}/compare`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text1, text2, comparison_type }),
     });
 
@@ -84,12 +87,12 @@ export class PDFQAService {
 
   static async summarizeText(
     text: string,
-    summary_type: string = 'brief',
+    summary_type: string = "brief",
     audience?: string
   ): Promise<SummarizationResponse> {
     const response = await fetch(`${API_BASE_URL}/summarize`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text, summary_type, audience }),
     });
 
@@ -101,10 +104,15 @@ export class PDFQAService {
   }
 
   // New method to delete uploaded file on backend
-  static async deleteFile(filename: string): Promise<{ success: boolean; message?: string }> {
-    const response = await fetch(`${API_BASE_URL}/delete_file?filename=${encodeURIComponent(filename)}`, {
-      method: 'DELETE',
-    });
+  static async deleteFile(
+    filename: string
+  ): Promise<{ success: boolean; message?: string }> {
+    const response = await fetch(
+      `${API_BASE_URL}/delete_file?filename=${encodeURIComponent(filename)}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`File delete failed: ${response.statusText}`);

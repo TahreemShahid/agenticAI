@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import { Header } from '@/components/Header';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GitCompare, FileText, Zap, Copy, CheckCircle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { PDFQAService } from '@/services/api';
+import { useState } from "react";
+import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { GitCompare, FileText, Zap, Copy, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { PDFQAService } from "@/services/api";
 
 const Compare = () => {
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [text1, setText1] = useState("");
+  const [text2, setText2] = useState("");
+  const [comparison, setComparison] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [compareType, setCompareType] = useState<'similarities' | 'differences' | 'comprehensive'>('comprehensive');
+  const [compareType, setCompareType] = useState<
+    "similarities" | "differences" | "comprehensive"
+  >("comprehensive");
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
 
@@ -28,8 +30,12 @@ const Compare = () => {
 
     setIsLoading(true);
     try {
-      const response = await PDFQAService.compareTexts(text1, text2, compareType);
-      
+      const response = await PDFQAService.compareTexts(
+        text1,
+        text2,
+        compareType
+      );
+
       if (response.success) {
         setComparison(response.comparison);
         toast({
@@ -40,7 +46,7 @@ const Compare = () => {
         throw new Error("Comparison failed");
       }
     } catch (error) {
-      console.error('Comparison error:', error);
+      console.error("Comparison error:", error);
       toast({
         title: "Error",
         description: "Failed to compare texts. Please try again.",
@@ -72,7 +78,7 @@ const Compare = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -80,7 +86,8 @@ const Compare = () => {
             <h2 className="text-3xl font-bold">AI Text Comparison</h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Compare two texts and get detailed analysis of similarities, differences, and insights
+            Compare two texts and get detailed analysis of similarities,
+            differences, and insights
           </p>
         </div>
 
@@ -127,16 +134,20 @@ const Compare = () => {
             <CardContent className="pt-6">
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Comparison Type:</label>
+                  <label className="text-sm font-medium">
+                    Comparison Type:
+                  </label>
                   <div className="flex gap-2">
                     {[
-                      { value: 'similarities', label: 'Similarities' },
-                      { value: 'differences', label: 'Differences' },
-                      { value: 'comprehensive', label: 'Comprehensive' },
+                      { value: "similarities", label: "Similarities" },
+                      { value: "differences", label: "Differences" },
+                      { value: "comprehensive", label: "Comprehensive" },
                     ].map((type) => (
                       <Button
                         key={type.value}
-                        variant={compareType === type.value ? 'default' : 'outline'}
+                        variant={
+                          compareType === type.value ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setCompareType(type.value as any)}
                       >
@@ -146,7 +157,7 @@ const Compare = () => {
                   </div>
                 </div>
 
-                <Button 
+                <Button
                   onClick={handleCompare}
                   disabled={isLoading || !text1.trim() || !text2.trim()}
                   size="lg"
@@ -187,7 +198,7 @@ const Compare = () => {
                     ) : (
                       <Copy className="h-4 w-4" />
                     )}
-                    {copied ? 'Copied!' : 'Copy'}
+                    {copied ? "Copied!" : "Copy"}
                   </Button>
                 )}
               </CardTitle>
@@ -197,13 +208,17 @@ const Compare = () => {
                 <div className="flex items-center justify-center h-[300px]">
                   <div className="text-center space-y-4">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                    <p className="text-muted-foreground">Analyzing and comparing texts...</p>
+                    <p className="text-muted-foreground">
+                      Analyzing and comparing texts...
+                    </p>
                   </div>
                 </div>
               ) : comparison ? (
                 <div className="space-y-4">
                   <div className="p-6 rounded-lg bg-muted/50 min-h-[300px]">
-                    <p className="whitespace-pre-wrap leading-relaxed">{comparison}</p>
+                    <p className="whitespace-pre-wrap leading-relaxed">
+                      {comparison}
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -222,35 +237,54 @@ const Compare = () => {
         <div className="mt-12 text-center">
           <Card className="max-w-4xl mx-auto">
             <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold mb-4">How to Use AI Text Comparison</h3>
+              <h3 className="text-lg font-semibold mb-4">
+                How to Use AI Text Comparison
+              </h3>
               <div className="grid md:grid-cols-4 gap-6 text-sm">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      1
+                    </div>
                   </div>
                   <h4 className="font-medium">Input Texts</h4>
-                  <p className="text-muted-foreground">Enter two texts you want to compare</p>
+                  <p className="text-muted-foreground">
+                    Enter two texts you want to compare
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      2
+                    </div>
                   </div>
                   <h4 className="font-medium">Choose Analysis</h4>
-                  <p className="text-muted-foreground">Select comparison type: similarities, differences, or comprehensive</p>
+                  <p className="text-muted-foreground">
+                    Select comparison type: similarities, differences, or
+                    comprehensive
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      3
+                    </div>
                   </div>
                   <h4 className="font-medium">AI Analysis</h4>
-                  <p className="text-muted-foreground">Get detailed AI-powered comparison</p>
+                  <p className="text-muted-foreground">
+                    Get detailed AI-powered comparison
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">4</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      4
+                    </div>
                   </div>
                   <h4 className="font-medium">Review Results</h4>
-                  <p className="text-muted-foreground">Copy or save the comparison insights</p>
+                  <p className="text-muted-foreground">
+                    Copy or save the comparison insights
+                  </p>
                 </div>
               </div>
             </CardContent>
