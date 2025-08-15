@@ -15,11 +15,13 @@ A modern React frontend for PDF question-answering using LangChain and advanced 
 ### Frontend (React)
 
 1. **Install dependencies:**
+
 ```bash
 npm install
 ```
 
 2. **Start development server:**
+
 ```bash
 npm run dev
 ```
@@ -28,28 +30,36 @@ The frontend will be available at `http://localhost:8080`
 
 ### Backend Setup
 
-You need to convert your existing Streamlit app to a REST API. Follow the detailed guide in `backend-setup.md`.
-
 **Quick Backend Setup:**
 
-1. **Install additional Python dependencies:**
+1. **Setup virtual environment**
+
 ```bash
-pip install fastapi uvicorn python-multipart
+python3 -m venv env
 ```
 
-2. **Create the API server** (see `backend-setup.md` for complete code):
 ```bash
-# Create api_server.py with the FastAPI code provided
-python api_server.py
+# Windows
+.\env\Scripts\activate
+
+# Linux or MacOs
+source ./env/bin/activate
+```
+
+2. **Install requirements**
+
+```bash
+pip install -r ./requirements.txt
 ```
 
 3. **Configure API keys:**
-Create `keys.txt` in your backend directory:
+   Create `keys.txt` in your backend directory:
+
 ```json
 {
-    "API_KEY": "your-api-key",
-    "AI_Agent_URL": "your-ai-agent-url",
-    "AI_Agent_Stream_URL": "your-stream-url"
+  "API_KEY": "your-api-key",
+  "AI_Agent_URL": "your-ai-agent-url",
+  "AI_Agent_Stream_URL": "your-stream-url"
 }
 ```
 
@@ -80,35 +90,21 @@ backend/
 ## Development Workflow
 
 1. **Start Backend:**
+
 ```bash
 cd backend/
 python api_server.py
 ```
 
 2. **Start Frontend:**
+
 ```bash
+cd frontend/
 npm run dev
 ```
 
 3. **Open in Browser:**
-Visit `http://localhost:8080`
-
-## Configuration
-
-### Backend Configuration (keys.txt)
-```json
-{
-    "API_KEY": "your-api-key",
-    "AI_Agent_URL": "https://your-ai-agent-url",
-    "AI_Agent_Stream_URL": "https://your-stream-url"
-}
-```
-
-### Frontend Configuration
-Update API base URL in `src/services/api.ts`:
-```typescript
-const API_BASE_URL = 'http://localhost:8000'; // Adjust as needed
-```
+   Visit `http://localhost:8080`
 
 ## API Endpoints
 
@@ -119,12 +115,14 @@ const API_BASE_URL = 'http://localhost:8000'; // Adjust as needed
 ## Production Deployment
 
 ### Frontend
+
 ```bash
 npm run build
 # Deploy the dist/ folder to your hosting service
 ```
 
 ### Backend
+
 ```bash
 # For production, use gunicorn or similar
 pip install gunicorn
@@ -134,16 +132,17 @@ gunicorn -w 4 -k uvicorn.workers.UvicornWorker api_server:app
 ## Docker Setup (Optional)
 
 Create `docker-compose.yml`:
+
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   frontend:
-    build: .
+    build: ./frontend
     ports:
       - "8080:8080"
     environment:
       - NODE_ENV=production
-  
+
   backend:
     build: ./backend
     ports:

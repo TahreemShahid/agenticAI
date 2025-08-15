@@ -12,18 +12,3 @@ dist
 dist-ssr
 *.local
 
-# Temporary files
-tmp/
-*.tmp
-*.temp
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
