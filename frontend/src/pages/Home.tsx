@@ -1,14 +1,14 @@
-import React from 'react';
-import { Header } from '@/components/Header';
-import { PDFUploader } from '@/components/PDFUploader';
-import { QuestionInput } from '@/components/QuestionInput';
-import { AnswerDisplay } from '@/components/AnswerDisplay';
-import { usePDFQA } from '@/hooks/usePDFQA';
-import { useToast } from '@/hooks/use-toast';
-import { FileText } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import React from "react";
+import { Header } from "@/components/Header";
+import { PDFUploader } from "@/components/PDFUploader";
+import { QuestionInput } from "@/components/QuestionInput";
+import { AnswerDisplay } from "@/components/AnswerDisplay";
+import { usePDFQA } from "@/hooks/usePDFQA";
+import { useToast } from "@/hooks/use-toast";
+import { FileText } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
-const Index = () => {
+const Home = () => {
   const {
     uploadedFile,
     isUploading,
@@ -59,8 +59,9 @@ const Index = () => {
             <h2 className="text-3xl font-bold">PDF Question & Answer</h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Upload any PDF document and ask intelligent questions about its content. 
-            Get instant answers with supporting evidence from your documents.
+            Upload any PDF document and ask intelligent questions about its
+            content. Get instant answers with supporting evidence from your
+            documents.
           </p>
         </div>
 
@@ -104,24 +105,36 @@ const Index = () => {
               <div className="grid md:grid-cols-3 gap-6 text-sm">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      1
+                    </div>
                   </div>
                   <h4 className="font-medium">Upload PDF</h4>
-                  <p className="text-muted-foreground">Upload your PDF document to start analyzing</p>
+                  <p className="text-muted-foreground">
+                    Upload your PDF document to start analyzing
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      2
+                    </div>
                   </div>
                   <h4 className="font-medium">Ask Questions</h4>
-                  <p className="text-muted-foreground">Type any question about the document content</p>
+                  <p className="text-muted-foreground">
+                    Type any question about the document content
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 justify-center">
-                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">
+                      3
+                    </div>
                   </div>
                   <h4 className="font-medium">Get Answers</h4>
-                  <p className="text-muted-foreground">Receive AI-powered answers with source citations</p>
+                  <p className="text-muted-foreground">
+                    Receive AI-powered answers with source citations
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -132,4 +145,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home;

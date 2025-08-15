@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python3 == 3.13 or 3.12
+Python3 == 3.12
 
 ## Setup virtual environment
 
